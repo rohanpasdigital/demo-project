@@ -1,0 +1,25 @@
+/**
+ * Updated App Module
+ * Uses configuration management and proper imports
+ */
+
+import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import { ChatModule } from './chat/chat.module';
+import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
+import { DATABASE_CONFIG } from './config';
+
+@Module({
+  imports: [
+    MongooseModule.forRoot(DATABASE_CONFIG.uri, DATABASE_CONFIG.options),
+    ChatModule,
+    UserModule,
+    AuthModule,
+  ],
+  controllers: [AppController],
+  providers: [AppService],
+})
+export class AppModule {}

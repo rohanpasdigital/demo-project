@@ -1,0 +1,23 @@
+// Top 20 languages spoken in India
+export const TOP_LANGUAGES = [
+  'Hindi',
+  'Bengali',
+  'Telugu',
+  'Marathi',
+  'Tamil',
+  'Urdu',
+  'Gujarati',
+  'Kannada',
+  'Odia',
+  'Malayalam',
+  'Punjabi',
+  'English',
+  'Assamese',
+  'Maithili',
+  'Santali',
+  'Konkani',
+  'Manipuri',
+  'Khasi',
+  'Nepali',
+  'Sindhi',
+];

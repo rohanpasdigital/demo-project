@@ -1,0 +1,42 @@
+/**
+ * Updated Main.ts
+ * Configures global middleware, pipes, filters, and interceptors
+ */
+
+import { NestFactory } from '@nestjs/core';
+import { AppModule } from './app.module';
+import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
+import { ResponseTransformInterceptor } from './common/interceptors/response.interceptor';
+import { TimeoutInterceptor } from './common/interceptors/timeout.interceptor';
+import { APP_CONFIG } from './config';
+
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule, {
+    logger: APP_CONFIG.isDevelopment ? ['log', 'debug', 'error', 'warn'] : ['error', 'warn'],
+  });
+
+  // Enable CORS
+  app.enableCors({
+    origin: APP_CONFIG.corsOrigin,
+    credentials: true,
+  });
+
+  // Global Filters
+  app.useGlobalFilters(new AllExceptionsFilter());
+
+  // Global Interceptors
+  app.useGlobalInterceptors(
+    new ResponseTransformInterceptor(),
+    new TimeoutInterceptor(),
+  );
+
+  // Global Pipes
+  // Add global validation pipe if needed
+
+  // Start server
+  await app.listen(APP_CONFIG.port);
+  console.log(`✓ Application running on port ${APP_CONFIG.port}`);
+  console.log(`✓ Environment: ${APP_CONFIG.environment}`);
+}
+
+bootstrap();
